@@ -38,7 +38,7 @@ app1.layout = html.Div([
             'padding': '10px 15px 10px',
             'border': 'thin lightgrey solid',
             'margin-bottom': '3px',
-            # 'backgroundColor': 'rgb(250, 250, 250)',
+            'backgroundColor': 'rgb(250, 250, 250)',
             }
         ),
 
@@ -66,22 +66,12 @@ app1.layout = html.Div([
             'margin-right': '0px',
             'margin-bottom': '3px'
             }),
-    html.Div([
-        html.H5('Description of method'),
-        html.Br(),
-        html.P("Some text here")
     ],
-        style={
-            'border': 'thin lightgrey solid',
-            'backgroundColor': 'rgb(250, 250, 250)',
-            'padding': '10px 15px 30px',
 
-            })
-    ],
     style = {
-        'margin-top': '10px',
-        "margin-left": "10px",
-        'margin-right': '10px',
+        'margin-top': '50px',
+        # "margin-left": "10px",
+        # 'margin-right': '10px',
         'margin-bottom': '5px'
         }
     )
@@ -384,7 +374,7 @@ def nickelpure1(nitotal):
     fig1.update_xaxes(gridcolor='white', range=[0, 14],
                      nticks=20, mirror=True, ticks='outside', showline=True)
     fig1.update_yaxes(gridcolor='white', ticks='outside',
-                    range=[0, nitotal+0.05])
+                    range=[0, nitotal*1.05])
     fig1.update_layout(
         title={
             'text': "Speciation plot",

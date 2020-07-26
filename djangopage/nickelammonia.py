@@ -44,6 +44,7 @@ app.layout = html.Div([
             'padding': '10px 15px 10px',
             'border': 'thin lightgrey solid',
             'margin-bottom': '3px',
+            'backgroundColor': 'rgb(250, 250, 250)',
             }
         ),
 
@@ -61,7 +62,7 @@ app.layout = html.Div([
     ],
         style={
             'border': 'thin lightgrey solid',
-            # 'backgroundColor': 'rgb(250, 250, 250)',
+            'backgroundColor': 'rgb(250, 250, 250)',
             'padding': '10px 15px 10px',
             'margin-bottom': '3px',
             }
@@ -94,22 +95,11 @@ app.layout = html.Div([
             'margin-bottom': '3px'
             }),
 
-    # begin method explanation
-    html.Div([
-        html.H5('Description of method'),
-        html.Br(),
-        html.P("Some text here")
-    ],
-        style={
-            'border': 'thin lightgrey solid',
-            'backgroundColor': 'rgb(250, 250, 250)',
-            'padding': '10px 15px 30px',
 
-            })
 ], style={
-        'margin-top': '10px',
-        "margin-left": "10px",
-        'margin-right': '10px',
+        'margin-top': '50px',
+        # "margin-left": "10px",
+        # 'margin-right': '10px',
         'margin-bottom': '5px'
 })
 
@@ -713,7 +703,7 @@ def speciation_graph(nitotal, ntotal):
                      nticks=20, mirror=True, ticks='outside', showline=True)
 
     fig1.update_yaxes(gridcolor='LightPink', ticks='outside',
-                    range=[0, max(nitotal, ntotal)+0.05])
+                    range=[0, max(nitotal, ntotal)*1.05])
     fig1.update_layout(
         title={
             'text': "Speciation plot",
