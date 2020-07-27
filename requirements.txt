@@ -21,7 +21,6 @@ constantly==15.1.0
 cryptography==2.8
 cycler==0.10.0
 daphne==2.5.0
-dash==1.11.0
 dash-core-components==1.9.1
 dash-html-components==1.0.3
 dash-renderer==1.4.0
