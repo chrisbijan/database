@@ -5,6 +5,7 @@
         <!-- <link rel="stylesheet" href='{% static
          "nickel/styles.css" %}' type=”text/css” /> -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href='https://codepen.io/chriddyp/pen/bWLwgP.css' integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
 
         <style type="text/css">
         /* nice color is #ff7675 */
@@ -40,12 +41,7 @@
                 animation: pulse 1s infinite;
                 animation-timing-function: linear;
             }
-            @keyframes pulse {
-                  0% { transform: scale(1); }
-                  50% { transform: scale(1.1);
-                  100% { transform: scale(1); }
-                  }
-                }
+
             .navbar:after{
                 content: "";
                 position: absolute;
@@ -72,7 +68,7 @@
                 margin-bottom: 2px;
                 margin-top: 2px;
                 background-color: #FEFDEB;
-                padding: -4px 2px -4px 2px;
+                padding: -4px 0px -4px 0px;
                 text-align: center;
                 border: 1px solid lightgrey;
             }
@@ -88,6 +84,7 @@
             .linkstopages a:hover {
                 color: #ff7675;
                 text-decoration: none;
+
             }
             br {
                 display: block; /* makes it have a width */
@@ -102,6 +99,12 @@
             	top: 0;
             	z-index: -1;
             }
+            @keyframes pulse {
+                  0% { transform: scale(1); }
+                  50% { transform: scale(1.1);
+                  100% { transform: scale(1); }
+                  }
+                }
 
             /* KEYFRAMES */
             @-webkit-keyframes animateBubble {
@@ -357,9 +360,9 @@
 
         <div class='linkstopages'>
             <h5><u>Nickel</u></h5>
-            <a href="{% url 'nickelpure' %}">Nickel</a>
+            <a href="{% url 'nickelpure' %}">Nickel-H<sub>2</sub>O</a>
             <br></br>
-            <a href="{% url 'nickelammonia' %}">Nickel-Ammonia-H<sub>2</sub>O system</a>
+            <a href="{% url 'nickelammonia' %}">Nickel-Ammonia-H<sub>2</sub>O</a>
         </div>
 
 

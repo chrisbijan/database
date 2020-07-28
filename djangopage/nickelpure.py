@@ -8,6 +8,9 @@ from scipy.optimize import fsolve
 from django_plotly_dash import DjangoDash
 
 app1 = DjangoDash('nickelpure', add_bootstrap_links=True)
+# app1.css.append_css({
+#     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
+# })
 
 app1.layout = html.Div([
     html.Div([
@@ -16,7 +19,7 @@ app1.layout = html.Div([
             'text-align':'center',
             'border': 'thin lightgrey solid',
             'backgroundColor': '#FEFDEB',
-            'padding': '5px 0 5px 0',
+            'padding': '-4px 0 -4px 0',
             'margin-bottom': '2px',
         }
         ),
@@ -49,12 +52,18 @@ app1.layout = html.Div([
                 id='nickelpure speciation',
                 )
         ],
-        # className='auto columns'
+        style={
+            'width': '48%',
+            'margin-left': '1%',
+        }
         ),
         html.Div([
             dcc.Graph(id='nickelpure potential')
         ],
-        # className='auto columns'
+        style={
+            'width': '48%',
+            'margin-right': '1%',
+        }
         )
     ],
     className='row',
@@ -69,7 +78,7 @@ app1.layout = html.Div([
     ],
 
     style = {
-        'margin-top': '50px',
+        'margin-top': '40px',
         # "margin-left": "10px",
         # 'margin-right': '10px',
         'margin-bottom': '5px'
@@ -235,8 +244,8 @@ def nickelpure(nitotal):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(50,0,0,0)',
         autosize=False,
-        width=600,
-        height=500,
+        # width=600,
+        # height=500,
             )
 
     fig = go.Figure(data=data, layout=layout)
@@ -367,8 +376,8 @@ def nickelpure1(nitotal):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgb(240,240,240)',
         autosize=False,
-        width=600,
-        height=500,
+        # width=600,
+        # height=500,
     )
     fig1 = go.Figure(data=data1, layout=layout)
     fig1.update_xaxes(gridcolor='white', range=[0, 14],

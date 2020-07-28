@@ -22,7 +22,7 @@ app.layout = html.Div([
             'text-align':'center',
             'border': 'thin lightgrey solid',
             'backgroundColor': '#FEFDEB',
-            'padding': '5px 0 5px 0',
+            'padding': '-10px 0 -10px 0',
             'margin-bottom': '2px',
         }
         ),
@@ -75,14 +75,20 @@ app.layout = html.Div([
                 id='speciation plot',
                 )
         ],
-        # className='auto columns'
+        style={
+            'width': '48%',
+            'margin-right': '1%',
+        }
         ),
         html.Div([
             dcc.Graph(
                 id='Potential-pH curve',
             ),
         ],
-        # className='auto columns'
+        style={
+            'width': '48%',
+            'margin-left': '1%',
+        }
         )
     ],
     className='row',
@@ -97,7 +103,7 @@ app.layout = html.Div([
 
 
 ], style={
-        'margin-top': '50px',
+        'margin-top': '40px',
         # "margin-left": "10px",
         # 'margin-right': '10px',
         'margin-bottom': '5px'
@@ -110,7 +116,8 @@ app.layout = html.Div([
      Input('ammonia_dropdown', 'value')])
 def calculate_graph(nitotal, ntotal):
     T_ = 298
-    # user inputs total concentrations
+    # This is making all the beta (cumalitive stability constant) values from the
+    # dodgy study on water treatment
     expos = [2.72, 4.89, 6.55, 7.67, 8.34, 8.31]
     betas = []
     for e in expos:
@@ -119,18 +126,22 @@ def calculate_graph(nitotal, ntotal):
     k4 = 10**(-18.27)
     k5 = 10**(-35.93)
     ###########################################################################
-    # begin first function, output all species concentrations. One concentration for each pH value.
-
+    # begin first function, output all species concentrations.
+    # One concentration output for each pH value
     def species(nitotal, ntotal, pH):
+        # convert pH to hydrogen ion concentration for later equations
         h = 10**(-pH)
-        if ntotal != 0.0:
-            # plug weighted sum into nh3 equation
+        if ntotal != 0.0:  # if total ammonia conc is NOT 0, carry out this
+
             f = []
             g = []
-            # n is average number of ligands
+            # this is to calculate average number of ligands, n.
+            # but this is not used in any calculations
+            # there for future use if want
             n_ = []
             alphas = []
-            # one set alphas should exist for each pH input
+            # one set alphas (6 alpha values, one for each complex)
+            # should exist for each pH input
             for i, beta in enumerate(betas):
                 for j, n in enumerate([1, 2, 3, 4, 5, 6]):
                     if i == j:
@@ -139,39 +150,54 @@ def calculate_graph(nitotal, ntotal):
                         g.append(beta*ammonia**n)
                         f.append(n*beta*ammonia**n)
             n_.append(sum(f)/sum(g))
+
+
             for gg in g:
+                # formula used from https://application.wiley-vch.de/books/sample/3527338772_c01.pdf
                 alphas.append(gg/sum(g))
-            # Ksp = 2*10**(-15)
+
+            # this is calculating Ni2+ (nip2free)
             K0 = 5.65*10**(-10)
-            # include ninnp2 in limit
             logk = 11.96
             f = 10**(logk - 2*pH)
             nip2free = f/(1+f/nitotal)
             ns = [1, 2, 3, 4, 5, 6]
 
+            # this is the ammonia mass balance rearranged in terms of nh3
+            # and solved
             def solve1(nh3):
                 summation = 0
                 for i in [0, 1, 2, 3, 4, 5]:
+                    # summation is sum of complex concentrations
                     summation += betas[i]*(nh3**ns[i])*nip2free
+
+                    # ignore this redefinition
                     fxy = summation
-                    # /(1+summation/ntotal)
                 return (nh3 + (h*nh3/k2) + fxy - ntotal)
+            # fsolve solves equation, output is nh3 conc
             nh3 = fsolve(solve1, 0.5)
+
+            # now use calculated nh3 conc to determine the complex concentrations
+            # ninnp2 is the sum of all complex concentrations
+            # ninxp2 is a list of all the complex concentrations
+            # ie [[Ni(NH3)2]+, [Ni(NH3)2] 2+, ..., [Ni(NH3)6]2+]]
             ninxp2 = []
             ninnp2 = 0
             for i in [0, 1, 2, 3, 4, 5]:
                 ninnp2 += betas[i]*(nh3**ns[i])*nip2free
                 # total complex conc limited by remaining ni available for complex
-                # should also include a -nip2ppt term but might not make much difference
                 ninnp2limit = nitotal - nip2free
                 fxx = ninnp2/(1+ninnp2/ninnp2limit)
                 # also recycle the for loop to generate complex concentrations
                 ninxp2.append(fxx*alphas[i])
+
             nio2 = nitotal - fxx - nip2free
             nhp = ntotal/(10**(-9.25+pH)+1)
+            # we only want the 3rd and 5th item in ninxp2 list (for n=4 and n=6)
             nin4p2 = ninxp2[3]
             nin6p2 = ninxp2[5]
-        elif int(ntotal) == 0:
+
+        elif int(ntotal) == 0: # however, if total ammonia conc IS 0, carry out this
             logk = 11.96
             f = 10**(logk - 2*pH)
             nip2free = f/(1+f/nitotal)
