@@ -28,7 +28,7 @@ SECRET_KEY = '3-j(c0p2urmznc9+^n2!x13xa_9e_5ec*60x#waxkb0ipnuxy)'
 DEBUG = True
 
 # HEROKU CHANGE
-ALLOWED_HOSTS = ['https://chrisbijanapp.herokuapp.com/', '127.0.0.1']
+ALLOWED_HOSTS = ['https://chrisbijanapp.herokuapp.com/', '127.0.0.1:8000']
 # ALLOWED_HOSTS = []
 
 
